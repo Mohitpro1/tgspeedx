@@ -17,11 +17,12 @@ class MyTelegramBot:
         self.clients.append(client)
 
     async def get_chat_ids(self, client):
-        chat_ids = []
-        async for dialog in client.iter_dialogs():
-            if str(dialog.chat.id).startswith('-'):
-                chat_ids.append(dialog.chat.id)
-        return chat_ids
+    chat_ids = []
+    async for dialog in await client.get_dialogs():
+        if str(dialog.chat.id).startswith('-'):
+            chat_ids.append(dialog.chat.id)
+    return chat_ids
+
 
     async def send_last_message_to_groups(self, client, timee, numtime, chat_ids):
         async for message in client.iter_history('me', limit=1):
